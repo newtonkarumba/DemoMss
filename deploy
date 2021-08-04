@@ -1,0 +1,4 @@
+rm target/* -R
+mvn clean wildfly:undeploy
+sleep 1
+mvn clean compile wildfly:deploy

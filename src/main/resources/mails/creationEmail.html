@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>$props.apply("email.activation.title")</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    </head>
+    <body>
+        <p>Dear $user.login</p>
+        <p>Your Member Self Service Portal account has been created, please click on the URL below to activate it:</p>
+        <p>
+            <a href="$activationLink">
+                <button class="btn btn-primary"
+                        style="padding: 10px 15px;display: inline-block;border-radius: 5px;background: #002c65; color: #ffffff;">
+                    Activate Account
+                </button>
+            </a>
+        </p>
+        <p>
+            <span>Regards,</span>
+            <br/>
+            <em>Systech Team.</em>
+        </p>
+    </body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Account Login</title>
+    <link href="template/css/bootstrap.min.css" rel="stylesheet">
+    <link href="template/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="template/css/animate.css" rel="stylesheet">
+    <link href="template/css/style.css" rel="stylesheet">
+    <!-- include the style -->
+    <link rel="stylesheet" href="alertifyjs/css/alertify.min.css"/>
+    <!-- include a theme -->
+    <link rel="stylesheet" href="alertifyjs/css/themes/default.min.css"/>
+    <link rel="stylesheet" href="app.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+
+</head>
+
+<body class="gray-bg" oncontextmenu="return false">
+
+<div class="lock-word animated fadeInDown">
+    <span class="first-word"></span><span></span>
+</div>
+<div class="ibox middle-box lockscreen animated fadeInDown" style="width: 434px !important">
+    <div class="ibox-content">
+        <div class="m-b-md"></div>
+        <a href="./" id="sitelogo"></a>
+        <h2>Account Login</h2>
+        <p>Provide correct credentials to access your account</p>
+        <div class="tabs-container m-t">
+            <ul class="nav nav-tabs" role="tablist">
+                <li><a class="nav-link active" data-toggle="tab" href="#tab-1">Member</a></li>
+                <li><a class="nav-link" data-toggle="tab" href="#tab-2">Employer</a></li>
+                <li><a class="nav-link" data-toggle="tab" href="#tab-3">Other</a></li>
+            </ul>
+            <div class="tab-content">
+                <div role="tabpanel" id="tab-1" class="tab-pane active">
+                    <div class="panel-body">
+                        <strong>Provide your registered phone number and password</strong>
+                        <form role="form" style="margin-top: 20px;padding-bottom: 20px" onsubmit="return false">
+                            <div class="form-group">
+<!--                                <label>Phone</label>-->
+                                <input type="tel"  id="phone" placeholder="Phone number"
+                                       class="form-control"
+                                       style="min-width: 317px !important;" required>
+                            </div>
+                            <div class="form-group">
+<!--                                <label>Password</label>-->
+                                <input type="password" id="pwd" placeholder="Password" class="form-control" required>
+                            </div>
+                            <div>
+                                <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit"
+                                onclick="ETL_memberLogin()">
+                                    <strong>Log in</strong>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div role="tabpanel" id="tab-2" class="tab-pane">
+                    <div class="panel-body">
+                        <strong>Provide your registered employer id and password</strong>
+                        <form role="form" style="margin-top: 20px;padding-bottom: 20px" onsubmit="return false">
+                            <div class="form-group"><label> EMPLOYER ID</label>
+                                <input type="tel" id="username1"  placeholder=" EMPLOYER ID" class="form-control"
+                                       required>
+                            </div>
+                            <div class="form-group"><label>Password</label>
+                                <input type="password" id="pwd1"  placeholder="Password" class="form-control" required>
+                            </div>
+                            <div>
+                                <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit"
+                                onclick="ETL_Login('username1','pwd1')">
+                                    <strong>Log in</strong>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div role="tabpanel" id="tab-3" class="tab-pane">
+                    <div class="panel-body">
+                        <strong>Provide your registered username and password</strong>
+                        <form role="form" style="margin-top: 20px;padding-bottom: 20px" onsubmit="return false">
+                            <div class="form-group"><label>Username</label>
+                                <input type="text" id="username2"  placeholder="Username" class="form-control"
+                                       required>
+                            </div>
+                            <div class="form-group"><label>Password</label>
+                                <input type="password" id="pwd2"  placeholder="Password" class="form-control"
+                                       required>
+                            </div>
+                            <div>
+                                <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit"
+                                        onclick="ETL_Login('username2','pwd2')">
+                                    <strong>Log in</strong>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="ibox-footer">
+        <a href="./" class="btn btn-default block full-width" type="submit">Cancel</a>
+    </div>
+</div>
+
+<div id="overlay">
+    <div id="text">
+        <img id="gif" src="images/lock.gif" height="120" width="120">
+        <div id="msg" style="display: none;">
+            <h4>Error encountered, please try again</h4>
+        </div>
+    </div>
+</div>
+
+<!-- Mainly scripts -->
+<script src="template/js/jquery-3.1.1.min.js"></script>
+<script src="template/js/popper.min.js"></script>
+<script src="template/js/bootstrap.js"></script>
+<!-- include the script -->
+<script src="alertifyjs/alertify.min.js"></script>
+<script type="text/javascript" src="app.js"></script>
+<script type="text/javascript" src="etl-auth.js"></script>
+<script type="text/javascript">
+    const phoneInputField = document.querySelector("#phone");
+
+    const phoneInput = window.intlTelInput(phoneInputField, {
+        preferredCountries: ["gh", "ke", "in", "us"],
+        utilsScript:
+            "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+    });
+    getLandingPageContent();
+</script>
+</body>
+</html>

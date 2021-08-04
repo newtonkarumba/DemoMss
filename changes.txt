@@ -1,0 +1,25 @@
+ me.urlGet(
+                `${MssPhoenix.model.Session.baseUrl}/api/getPrincipalOfficerSchemes/${MssPhoenix.model.Session.getUserId()}/${MssPhoenix.model.Session.getLoggedInMemberId()}`,
+                function (obj) {
+                    if (obj.success) {
+                        // console.log(obj);
+                        let dataArr = (obj.data);
+                        //get active scheme id and name
+                        for (let i = 0; i < dataArr.length; i++) {
+                            let data = dataArr[i];
+                            if ((data.id) === schemeId) {
+                                // console.log(data)
+                                let schemeName = data.schemeName;
+                                let schemeId = data.id;
+                                me.saveItem('activeSchemeId', schemeId);
+                                me.saveItem('poActiveSchemeName', schemeName);
+                                memberHeaderSchemeBox.setInputValue(schemeName);
+                                memberHeaderSchemeBox.setTooltip('Scheme : ' + schemeName);
+                                break;
+                            }
+                        }
+                    }
+                },
+                function (err) {
+                }
+            );

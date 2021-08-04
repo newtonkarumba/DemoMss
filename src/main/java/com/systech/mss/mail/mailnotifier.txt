@@ -1,0 +1,458 @@
+package com.systech.mss.mail;
+
+
+import com.systech.mss.config.Constants;
+import com.systech.mss.domain.*;
+import com.systech.mss.repository.EmailTemplatesRepository;
+import com.systech.mss.repository.MailConfigRepository;
+import com.systech.mss.repository.NotificationRepository;
+import com.systech.mss.vm.PlainEmailVm;
+import org.apache.commons.mail.DefaultAuthenticator;
+import org.apache.commons.mail.HtmlEmail;
+import org.apache.deltaspike.core.api.message.Message;
+import org.apache.deltaspike.core.api.message.MessageContext;
+import org.apache.velocity.Template;
+import org.apache.velocity.VelocityContext;
+import org.apache.velocity.app.VelocityEngine;
+import org.slf4j.Logger;
+
+import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.event.ObservesAsync;
+import javax.inject.Inject;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import java.io.StringWriter;
+import java.util.Date;
+import java.util.Locale;
+import java.util.Optional;
+import java.util.Properties;
+import java.util.function.Function;
+
+import static com.systech.mss.config.Constants.EMAIL_CONFIGS_NOT_SET;
+
+
+@ApplicationScoped
+public class MailNotifier {
+
+    private static final String USER = "user";
+    private static final String USERNAME = "userName";
+    private static final String TICKETNUMBER = "ticketNumber";
+    private static final String CLAIM_CHANGES = "claimChanges";
+    private static final String BENEFITNUMBER = "benefitNumber";
+    private static final String MAILLINK = "mailLink";
+    private static final String ACTIVATION_LINK = "activationLink";
+    private static final String PWD_RESET_LINK = "pwdResetLink";
+
+
+    @Inject
+    private Logger log;
+
+    @Inject
+    private VelocityEngine engine;
+
+    @Inject
+    private MessageContext messageContext;
+
+    @Inject
+    private MailConfigRepository mailConfigRepository;
+
+    @Inject
+    NotificationRepository notificationRepository;
+
+    @Inject
+    private EmailTemplatesRepository emailTemplatesRepository;
+
+    public void sendEmail(@ObservesAsync MailEvent event) {
+
+        User user = event.getUser();
+        String to = user.getEmail();
+
+        if (getMailConfig().isPresent()) {
+            MailConfig mailConfig = getMailConfig().get();
+
+            if (event.getAction() != null) {
+                switch (event.getAction()) {
+                    case Constants.SEND_SUPPORT_MESSAGE:
+                        log.info("Sending " + Constants.SEND_SUPPORT_MESSAGE);
+                        sendSupportEmail(event);
+                        return;
+                    case Constants.SEND_ACTIVATION_EMAIL3:
+                        log.info("Sending " + Constants.SEND_ACTIVATION_EMAIL3);
+                        sendActivationEmail3(event);
+                        return;
+                    default:
+                }
+            }
+
+            EmailTemplatesEnum emailTemplatesEnum = event.getEmailTemplatesEnum();
+            if (emailTemplatesEnum != null) {
+                log.info("Sending using template " + emailTemplatesEnum.getName());
+
+                if (mailConfig.getMailType().equals(MailType.SSL)) {
+                    sendSSLEmail(mailConfig, event, emailTemplatesEnum);
+                } else {
+                    sendTLSEmail(mailConfig, event, emailTemplatesEnum);
+                }
+                return; //UKITOA JUWA UMEANZA KUWA MTU BLADFAKIN ☹
+                //☹☹☹ sawa kiongos
+            }
+
+            log.info("Send email Default option");
+            Message message = getMessage(event.getUser());
+            String subject = message.template(String.format("{%s}", event.getSubjectTemplate())).toString();
+            String content = getContent(event, message);
+            sendSSLEmail(
+                    user.getUserDetails().getName(),
+                    to,
+                    subject,
+                    content
+            );
+        } else {
+            log.warn("e-mail could not be sent to user '{}', exception is: {}", to, EMAIL_CONFIGS_NOT_SET);
+        }
+    }
+
+    private void sendPlainMessage(@ObservesAsync PlainEmailVm plainEmailVm) {
+        String subject = plainEmailVm.getSubject(),
+                content = plainEmailVm.getMessage(),
+                to = plainEmailVm.getEmail();
+        sendMyEmail(
+                to,
+                to,
+                subject,
+                content
+        );
+    }
+
+    private void sendActivationEmail3(MailEvent mailEvent) {
+        if (getMailConfig().isPresent()) {
+            User user = mailEvent.getUser();
+            MailConfig mailConfig = getMailConfig().get();
+            Message message = getMessage(user);
+            String baseUrl = mailConfig.getBaseUrl();
+            String subject = message.template(String.format("{%s}", mailEvent.getSubjectTemplate())).toString();
+            String[] args = mailEvent.getArgs();
+
+            try {
+
+                Template t = engine.getTemplate(String.format("mails/%s.html", mailEvent.getContentTemplate()));
+                VelocityContext context = new VelocityContext();
+
+                context.put("name", user.getUserDetails().getName());
+                context.put("username", args[0]);
+                context.put("password", args[1]);
+                context.put("portalLink", baseUrl);
+
+                context.put("props", (Function<String, Message>) message::template);
+                StringWriter writer = new StringWriter();
+                t.merge(context, writer);
+                String content = writer.toString();
+                sendMyEmail(
+                        user.getUserDetails().getName(),
+                        user.getEmail(),
+                        subject,
+                        content
+                );
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                log.error(e.getMessage());
+            }
+        }
+    }
+
+    private void sendMyEmail(String toName, String emailTo, String subject, String content) {
+        if (getMailConfig().isPresent()) {
+            MailConfig mailConfig = getMailConfig().get();
+            if (mailConfig.getMailType().equals(MailType.SSL)) {
+                sendSSLEmail(
+                        toName,
+                        emailTo,
+                        subject,
+                        content
+                );
+            } else {
+                sendTLSEmail(
+                        toName,
+                        emailTo,
+                        subject,
+                        content
+                );
+            }
+        }
+    }
+
+    private void sendSupportEmail(MailEvent event) {
+        if (getMailConfig().isPresent()) {
+            SupportMessages supportMessages = event.getSupportMessages();
+            MailConfig mailConfig = getMailConfig().get();
+            String subject = "ACTION REQUIRED";
+            String content = supportMessages.getMessage();
+            sendMyEmail(
+                    mailConfig.getSupportEmail(),
+                    mailConfig.getSupportEmail(),
+                    subject,
+                    content
+            );
+        }
+    }
+
+    private String getContent(MailEvent mailEvent, Message message) {
+        String baseUrl = getMailConfig().isPresent() ? getMailConfig().get().getBaseUrl() : "";
+        Template t = engine.getTemplate(String.format("mails/%s.html", mailEvent.getContentTemplate()));
+        VelocityContext context = new VelocityContext();
+        if (mailEvent.getTicket() != null) {
+            context.put(TICKETNUMBER, mailEvent.getTicket().getId());
+            context.put(MAILLINK, baseUrl + "/mssvision/#mainticket");
+        }
+        if (mailEvent.getBenefitRequest() != null) {
+            context.put(BENEFITNUMBER, mailEvent.getBenefitRequest().getId());
+        }
+        if (mailEvent.getChanges() != null) {
+            context.put(CLAIM_CHANGES, mailEvent.getChanges());
+        }
+        context.put(USER, mailEvent.getUser());
+        context.put(USERNAME, mailEvent.getUser().getUserDetails().getName());
+        context.put(PWD_RESET_LINK, baseUrl + "/reset-password.jsp?key=" + mailEvent.getUser().getResetKey());
+        context.put(ACTIVATION_LINK, baseUrl + "/handle?action=activate&key=" + mailEvent.getUser().getActivationKey());
+
+        context.put("props", (Function<String, Message>) message::template);
+        StringWriter writer = new StringWriter();
+        t.merge(context, writer);
+        return writer.toString();
+
+    }
+
+    private Message getMessage(User user) {
+        return messageContext.messageSource("i18n.messages")
+                .localeResolver(() -> Locale.forLanguageTag(user.getLangKey()))
+                .message();
+    }
+
+    private void sendSSLEmail(MailConfig mailConfig, MailEvent event, EmailTemplatesEnum emailTemplatesEnum) {
+        EmailTemplates emailTemplates = emailTemplatesRepository.findByEmailTemplatesEnum(
+                emailTemplatesEnum
+        );
+        String to;
+        if (emailTemplatesEnum.equals(EmailTemplatesEnum.NEW_MEMBER_APPROVAL) || emailTemplatesEnum.equals(EmailTemplatesEnum.NEW_MEMBER_DECLINE)) {
+            to = event.getMember().getEmailAddress();
+        } else if (emailTemplatesEnum.equals(EmailTemplatesEnum.MEMBER_BIO_DATA_UPDATE_APPROVAL) || emailTemplatesEnum.equals(EmailTemplatesEnum.MEMBER_BIO_DATA_UPDATE_DECLINE)) {
+            to = event.getStageMemberDetails().getDetails().getEmail();
+        } else {
+            to = event.getUser().getEmail();
+        }
+        if (emailTemplates != null) {
+            User user = event.getUser();
+            String title = emailTemplates.getTitle();
+            String content = populateContent(emailTemplatesEnum, emailTemplates, event, mailConfig);
+            sendSSLEmail(
+                    user.getUserDetails().getName(),
+                    to,
+                    title,
+                    content
+            );
+        }
+    }
+
+    public void sendTLSEmail(MailConfig mailConfig, MailEvent event, EmailTemplatesEnum emailTemplatesEnum) {
+        User user = event.getUser();
+        EmailTemplates emailTemplates = emailTemplatesRepository.findByEmailTemplatesEnum(
+                emailTemplatesEnum
+        );
+        String content = populateContent(emailTemplatesEnum, emailTemplates, event, mailConfig);
+        String to;
+        if (emailTemplatesEnum.equals(EmailTemplatesEnum.NEW_MEMBER_APPROVAL) || emailTemplatesEnum.equals(EmailTemplatesEnum.NEW_MEMBER_DECLINE)) {
+            to = event.getMember().getEmailAddress();
+        } else if (emailTemplatesEnum.equals(EmailTemplatesEnum.MEMBER_BIO_DATA_UPDATE_APPROVAL) || emailTemplatesEnum.equals(EmailTemplatesEnum.MEMBER_BIO_DATA_UPDATE_DECLINE)) {
+            to = event.getStageMemberDetails().getDetails().getEmail();
+        } else {
+            to = event.getUser().getEmail();
+        }
+        sendTLSEmail(
+                user.getUserDetails().getName(),
+                to,
+                emailTemplates.getTitle(),
+                content
+        );
+    }
+
+    /**
+     * @param toName  senderName
+     * @param to      recipient
+     * @param subject subject
+     * @param content message
+     */
+    public void sendTLSEmail(String toName, String to, String subject, String content) {
+        if (getMailConfig().isPresent()) {
+            log.info("Now initiating TLS....");
+            MailConfig mailConfig = getMailConfig().get();
+            Properties props = new Properties();
+            props.put("mail.smtp.auth", true);
+            props.put("mail.smtp.starttls.enable", "true");
+            props.put("mail.smtp.host", mailConfig.getHost());
+            props.put("mail.smtp.port", mailConfig.getPort());
+            javax.mail.Session session = javax.mail.Session.getInstance(props, new javax.mail.Authenticator() {
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication(mailConfig.getUsername(), mailConfig.getPassword());
+                }
+            });
+            try {
+                MimeMessage msg = new MimeMessage(session);
+
+                log.warn(" User Recepient email ==== " + to);
+                InternetAddress[] address = InternetAddress.parse(to, true);
+                msg.setRecipients(javax.mail.Message.RecipientType.TO, address);
+                msg.setSubject(subject);
+                msg.setSentDate(new Date());
+                msg.setText(content);
+                msg.setHeader("XPriority", "1");
+                log.info(msg.toString());
+                Transport.send(msg);
+                notificationRepository.create(
+                        Notification.getInstance(
+                                toName,
+                                to,
+                                content,
+                                msg.getSubject(),
+                                true
+                        )
+                );
+                log.warn("Mail has been sent successfully");
+            } catch (MessagingException mex) {
+                mex.printStackTrace();
+                log.warn("Unable to send an email" + mex);
+            }
+        }
+    }
+
+    /**
+     * @param toName  senderName
+     * @param to      recipient
+     * @param subject subject
+     * @param content message
+     */
+    public void sendSSLEmail(String toName, String to, String subject, String content) {
+        if (getMailConfig().isPresent()) {
+            try {
+                log.info("Now initiating SSL....");
+                MailConfig mailConfig = getMailConfig().get();
+                HtmlEmail email = new HtmlEmail();
+                email.setHostName(mailConfig.getHost());
+                email.setStartTLSEnabled(mailConfig.isEnableTLS());
+                email.setSmtpPort(mailConfig.getPort());
+                email.setAuthenticator(new DefaultAuthenticator(mailConfig.getUsername(),
+                        mailConfig.getPassword()));
+                email.setFrom(mailConfig.getFrom());
+                email.setSubject(subject);
+                email.getMailSession().getProperties().put("mail.smtp.ssl.trust", mailConfig.getHost());
+                email.setHtmlMsg(content);
+                email.addTo(to);
+                String s = email.send();
+                notificationRepository.create(
+                        Notification.getInstance(
+                                toName,
+                                to,
+                                content,
+                                subject,
+                                s != null
+                        )
+                );
+                log.info("Sent e-mail to User '{}'", to);
+            } catch (Exception e) {
+                e.printStackTrace();
+                log.warn("e-mail could not be sent to user '{}', exception is: {}", to, e.getMessage());
+            }
+        }
+    }
+
+    private String populateContent(EmailTemplatesEnum emailTemplatesEnum, EmailTemplates emailTemplates, MailEvent event, MailConfig mailConfig) {
+
+        String content = emailTemplates.getTemplate();
+        User user = event.getUser();
+        String[] args = event.getArgs();
+        String baseUrl = mailConfig.getBaseUrl();
+        if (content != null) {
+            switch (emailTemplatesEnum) {
+                case OTP_VERIFICATION:
+                    content = content.replaceAll("#name", user.getUserDetails().getName())
+                            .replaceAll("#token", args[0]);
+                    break;
+                case ACCOUNT_ACTIVATION:
+                case PRINCIPAL_OFFICER_ACCOUNT_ACTIVATION:
+                case ADMIN_ACCOUNT_ACTIVATION:
+                case MEMBER_ACCOUNT_ACTIVATION:
+                case PASSWORD_RESET:
+                    content = content.replaceAll("#name", user.getUserDetails().getName())
+                            .replaceAll("#username", args[0])
+                            .replaceAll("#password", args[1])
+                            .replaceAll("#portalLink", baseUrl);
+                    break;
+                case REQUEST_PASSWORD_RESET:
+                    content = content.replaceAll("#name", user.getUserDetails().getName())
+                            .replaceAll("#url",
+                                    "<a href=\"" +
+                                            baseUrl + "/reset-password.jsp?key=" + user.getResetKey()
+                                            + "\">Reset password</a>"
+                            );
+                    break;
+                case CLAIM_STATUS:
+                    content = content.replaceAll("#name", user.getUserDetails().getName())
+                            .replaceAll("#benefitNumber", args[0])
+                            .replaceAll("#change", args[1])
+                            .replaceAll("#portalLink", baseUrl);
+                    break;
+                case TICKET_RAISED:
+                    content = content.replaceAll("#name", user.getUserDetails().getName())
+                            .replaceAll("#ticketNumber", args[0])
+                            .replaceAll("#portalLink", baseUrl);
+                    break;
+                case TICKET_REPLY:
+                    content = content.replaceAll("#name", user.getUserDetails().getName())
+                            .replaceAll("#ticketNumber", args[0])
+                            .replaceAll("#message", args[1])
+                            .replaceAll("#replyBy", args[2])
+                            .replaceAll("#timeReplied", args[3])
+                            .replaceAll("#portalLink", baseUrl);
+                    break;
+                case PO_NEW_MEMBER_APPROVAL:
+                case PO_BENEFICIARY_APPROVAL:
+                case PO_PENDING_CLAIM:
+                case CRM_PENDING_CLAIM:
+                    content = content.replaceAll("#name", user.getUserDetails().getName())
+                            .replaceAll("#memberName", args[0])
+                            .replaceAll("#portalLink", baseUrl);
+                    break;
+                case NEW_MEMBER_APPROVAL:
+                case NEW_MEMBER_DECLINE:
+                    content = content.replaceAll("#name", (event.getMember().getFirstname() != null ? event.getMember().getFirstname() : "")
+                            + " "
+                            + (event.getMember().getLastname() != null ? event.getMember().getLastname() : " "))
+                            .replaceAll("#portalLink", baseUrl);
+                    break;
+                case MEMBER_BIO_DATA_UPDATE_APPROVAL:
+                case MEMBER_BIO_DATA_UPDATE_DECLINE:
+                    content = content.replaceAll("#name", event.getStageMemberDetails().getFname() + " " + event.getStageMemberDetails().getLastName())
+                            .replaceAll("#portalLink", baseUrl);
+                    break;
+                case MEMBER_BENEFICIARY_DECLINE:
+                case MEMBER_BENEFICIARY_APPROVAL:
+                    content = content.replaceAll("#name", user.getUserDetails().getName())
+                            .replaceAll("#portalLink", baseUrl);
+                    break;
+                default:
+            }
+        } else {
+            content = "";
+        }
+        return content;
+    }
+
+    private Optional<MailConfig> getMailConfig() {
+        return mailConfigRepository.findAll().stream()
+                .filter(MailConfig::isEnabled)
+                .findFirst();
+    }
+}

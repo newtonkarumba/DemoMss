@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Become A Member</title>
+    <link href="template/css/bootstrap.min.css" rel="stylesheet">
+    <link href="template/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link href="template/css/plugins/steps/jquery.steps.css" rel="stylesheet">
+    <link href="template/css/animate.css" rel="stylesheet">
+    <link href="template/css/style.css" rel="stylesheet">
+
+    <!-- include the style -->
+    <link rel="stylesheet" href="alertifyjs/css/alertify.min.css"/>
+    <!-- include a theme -->
+    <link rel="stylesheet" href="alertifyjs/css/themes/default.min.css"/>
+
+    <link rel="stylesheet" href="app.css">
+    <style>
+        fieldset {
+            border: none !important;
+        }
+    </style>
+</head>
+<body class="top-navigation">
+
+<div id="wrapper">
+    <div id="page-wrapper" class="gray-bg">
+        <div class="wrapper wrapper-content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="ibox-content m-b-sm border-bottom">
+                            <div class="text-center p-lg">
+                                <a href="./" id="sitelogo">
+                                    <img src="images/SystechLogo.PNG" width="242" height="auto">
+                                </a>
+                                <h2>Become A Member</h2>
+                                <h4>By visiting this page, it shows your interest in becoming a member.<br> This wizard
+                                    will guide you to successfully submit your details for processing.</h4>
+                                <a href="./">
+                                    <button class="btn btn-primary btn-sm" style="background-color: #025b80"><i
+                                            class="fa fa-arrow-alt-circle-left"></i> Home
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+
+                        <div class="ibox">
+                            <div class="ibox-content">
+                                <form id="form" action="#" class="wizard-big">
+
+
+                                    <h1>CURRENT EMPLOYER'S ID </h1>
+                                    <fieldset>
+                                        <div class="row">
+                                            <div class="col-lg-3"></div>
+                                            <div class="col-lg-6">
+                                                <h2>Current Employer's Reference Number</h2>
+                                                <div class="form-group">
+                                                    <label for="sponsorId"></label>
+                                                    <input id="sponsorId" name="sponsorId" type="text"
+                                                           placeholder="Enter Employer ID" class="form-control required">
+                                                </div>
+                                                <div id="pg" style="display: none">
+                                                    <center><img src="images/ajax-loader.gif"></center>
+                                                </div>
+                                                <span id="mimsg" style="color:darkred;"></span>
+                                            </div>
+                                            <div class="col-lg-3"></div>
+                                        </div>
+                                    </fieldset>
+
+                                    <h1>EMPLOYER DETAILS</h1>
+                                    <fieldset>
+                                        <h2></h2>
+                                        <div class="row">
+                                            <div class="col-md-6 form-group">
+                                                <label for="employer" class="control-label">CURRENT EMPLOYER'S
+                                                    NAME:</label>
+                                                <input type="text" name="employer" class="form-control" id="employer"
+                                                       placeholder="Current Employer's Name" value=""
+                                                       oninput="this.value=this.value.toUpperCase()" readonly>
+                                            </div>
+                                            <div class="col-md-6 form-group">
+                                                <label for="employerAddress" class="control-label">CURRENT EMPLOYER'S
+                                                    POSTAL ADDRESS:</label>
+                                                <input type="text" name="employerAddress" class="form-control"
+                                                       id="employerAddress" placeholder="Current Employer's Address"
+                                                       value="" oninput="this.value=this.value.toUpperCase()" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6 form-group">
+                                                <label for="employerProdNo" class="control-label">CURRENT EMPLOYER'S
+                                                    ID:</label> <input
+                                                    type="text" name="employerProdNo" class="form-control"
+                                                    id="employerProdNo" value=""
+                                                    placeholder="Current employer product number"
+                                                    oninput="this.value=this.value.toUpperCase()" readonly>
+                                            </div>
+                                            <div class="col-md-6 form-group">
+                                                <label for="schemeproduct" class="control-label">SELECT SCHEME
+                                                    PRODUCT:</label>
+                                                <input type="text"
+                                                       name="schemeproduct" id="schemeproduct" class="form-control"
+                                                       value="" readonly>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+
+                                    <h1> CONTRIBUTOR'S NAME</h1>
+                                    <fieldset>
+                                        <h2></h2>
+                                        <div class="row">
+                                            <div class="col-md-4 form-group">
+                                                <label for="title" class="control-label required">TITLE:</label>
+                                                <select id="title" name="title" class="form-control required">
+                                                    <option value="">Select Title ...</option>
+                                                    <option value="PROF">Prof</option>
+                                                    <option value="DR">Dr</option>
+                                                    <option value="MR">Mr</option>
+                                                    <option value="MRS">Mrs</option>
+                                                    <option value="REV">Rev</option>
+                                                    <option value="HON">Hon</option>
+                                                    <option value="ENG">Eng</option>
+                                                    <option value="MISS">Ms</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-4 form-group">
+                                                <label for="surName" class="control-label">SURNAME:</label>
+                                                <input
+                                                        type="text" name="surName" class="form-control required"
+                                                        id="surName"
+                                                        placeholder="Surname Name"
+                                                        oninput="this.value=this.value.toUpperCase()">
+                                            </div>
+                                            <div class="col-md-4 form-group">
+                                                <label for="etl_firstName" class="control-label">FIRST NAME:</label>
+                                                <input
+                                                        type="text" name="etl_firstName" class="form-control required"
+                                                        id="etl_firstName"
+                                                        placeholder="First Name"
+                                                        oninput="this.value=this.value.toUpperCase()">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6 form-group">
+                                                <label for="etl_lastName" class="control-label">OTHER NAMES:</label>
+                                                <input type="text" name="etl_lastName" class="form-control"
+                                                       id="etl_lastName" placeholder="OTHER NAMES"
+                                                       oninput="this.value=this.value.toUpperCase()">
+                                            </div>
+
+                                            <div class="col-md-6 form-group">
+                                                <label for="salary" class="control-label required">MONTHLY
+                                                    SALARY:</label>
+                                                <input type="number" name="salary" class="form-control required"
+                                                       id="salary" placeholder="MONTHLY SALARY">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6 form-group">
+                                                <label for="dateOfAppointment" class="control-label  required">DATE OF
+                                                    APPOINTMENT:</label>
+                                                <input type="date"
+                                                       name="dateOfAppointment"
+                                                       class="form-control datepicker"
+                                                       id="dateOfAppointment"
+                                                       placeholder="Date Of Appointment">
+                                            </div>
+                                            <div class="col-md-6 form-group">
+                                                <label for="taxNumber" class="control-label">TAX NUMBER :</label>
+                                                <input
+                                                        type="text" name="taxNumber" class="form-control" id="taxNumber"
+                                                        placeholder="TAX NUMBER"
+                                                        oninput="this.value=this.value.toUpperCase()">
+                                            </div>
+                                        </div>
+                                    </fieldset>
+
+                                    <h1>PREVIOUS NAME / MAIDEN NAME</h1>
+                                    <fieldset>
+                                        <h2></h2>
+                                        <div class="row">
+                                            <div class="col-md-6 form-group">
+                                                <label for="MsurName" class="control-label">SURNAME:</label> <input
+                                                    type="text" name="MsurName" class="form-control" id="MsurName"
+                                                    placeholder="Surname Name"
+                                                    oninput="this.value=this.value.toUpperCase()">
+                                            </div>
+                                            <div class="col-md-6 form-group">
+                                                <label for="MfirstName" class="control-label">FIRST NAME:</label>
+                                                <input
+                                                        type="text" name="MfirstName" class="form-control"
+                                                        id="MfirstName"
+                                                        placeholder="First Name"
+                                                        oninput="this.value=this.value.toUpperCase()">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6 form-group">
+                                                <label for="M_otherName" class="control-label">OTHER NAMES:</label>
+                                                <input
+                                                        type="text" name="M_otherName" class="form-control"
+                                                        id="M_otherName"
+                                                        placeholder="OTHER NAMES"
+                                                        oninput="this.value=this.value.toUpperCase()">
+                                            </div>
+                                        </div>
+                                    </fieldset>
+
+                                    <h1> OTHER DETAILS</h1>
+                                    <fieldset>
+                                        <h2></h2>
+                                        <div class="row">
+                                            <div class="col-md-6 form-group">
+                                                <label for="dateOfBirth" class="control-label required">Date Of
+                                                    Birth:</label>
+                                                <input type="date"
+                                                       name="dateOfBirth"
+                                                       onchange="autoAgeCalculation()"
+                                                       class="form-control datepicker required"
+                                                       id="dateOfBirth"
+                                                       placeholder="Date Of Birth">
+                                            </div>
+                                            <div class="col-md-6 form-group" style="display: block">
+                                                <label for="age" class="control-label required">AGE:</label>
+                                                <input
+                                                        type="text" name="age" class="form-control required" id="age"
+                                                        min="18"
+                                                        placeholder="age" readonly required>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+
+                                            <div class="col-md-6 form-group">
+                                                <label for="etl_gender" class="control-label required">Gender:</label>
+                                                <select name="gender" id="etl_gender" class="form-control required">
+                                                    <option disabled selected>Select...</option>
+                                                    <option value="MALE">Male</option>
+                                                    <option value="FEMALE">Female</option>
+                                                    <option value="UNKNOWN">Unknown</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6 form-group">
+                                                <label for="etl_maritalStatus"
+                                                       class="control-label required">Current Marital
+                                                    Status:</label>
+                                                <select name="etl_maritalStatus"
+                                                        id="etl_maritalStatus"
+                                                        class="form-control required">
+                                                    <option selected disabled>Select...</option>
+                                                    <option value="SINGLE">Single</option>
+                                                    <option value="MARRIED">Married</option>
+                                                    <option value="SEPARATED">Separated</option>
+                                                    <option value="DIVORCED">Divorced</option>
+                                                    <option value="WIDOWED">Widowed</option>
+                                                    <option value="ABANDONED">Abandoned</option>
+                                                    <option value="NOT_SPECIFIED">Not Specified</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+
+
+                                    <h1>NATIONALITY</h1>
+                                    <fieldset>
+                                        <div class="row">
+                                            <div class="col-md-6 form-group">
+                                                <label for="nationality"
+                                                       class="control-label required">NATIONALITY:</label>
+                                                <input
+                                                        type="text" name="nationality" class="form-control required"
+                                                        id="nationality"
+                                                        placeholder="Nationality"
+                                                        oninput="this.value=this.value.toUpperCase()">
+                                            </div>
+                                            <div class="col-md-6 form-group">
+                                                <label for="etl_country" class="control-label required">COUNTRY:</label>
+                                                <select
+                                                        name="etl_country" id="etl_country"
+                                                        class="form-control required">
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+
+                                    <h1>PLACE OF BIRTH</h1>
+                                    <fieldset>
+                                        <div class="row">
+                                            <div class="col-md-4 form-group">
+                                                <label for="postalTown" class="control-label">TOWN:</label> <input
+                                                    type="text" name="postalTown" class="form-control required"
+                                                    id="postalTown"
+                                                    placeholder="Town"
+                                                    oninput="this.value=this.value.toUpperCase()">
+                                            </div>
+                                            <div class="col-md-4 form-group">
+                                                <label for="region" class="control-label">REGION :</label> <input
+                                                    type="text" name="region" class="form-control"
+                                                    id="region"
+                                                    placeholder="Region"
+                                                    oninput="this.value=this.value.toUpperCase()">
+                                            </div>
+                                            <div class="col-md-4 form-group">
+                                                <label for="etl_country_of_Birth" class="control-label required">COUNTRY
+                                                    OF BIRTH:</label>
+                                                <select
+                                                        name="etl_country_of_Birth" id="etl_country_of_Birth"
+                                                        class="form-control required">
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+
+                                    <h1>ADDRESSES</h1>
+                                    <fieldset>
+                                        <div class="row">
+                                            <div class="col-md-6 form-group">
+                                                <label for="postalAddress" class="control-label"> POSTAL
+                                                    ADDRESS:</label> <input
+                                                    type="text" name="postalAddress" class="form-control"
+                                                    id="postalAddress"
+                                                    placeholder="Postal Address"
+                                                    oninput="this.value=this.value.toUpperCase()">
+                                            </div>
+                                            <div class="col-md-6 form-group">
+                                                <label for="homeAddress" class="control-label">PERMANENT HOME
+                                                    ADDRESS:</label> <input
+                                                    type="text" name="homeAddress" class="form-control"
+                                                    id="homeAddress"
+                                                    placeholder="Permanent Home Address"
+                                                    oninput="this.value=this.value.toUpperCase()">
+                                            </div>
+                                        </div>
+                                    </fieldset>
+
+                                    <h1>CURRENT CONTACT DETAILS</h1>
+                                    <fieldset>
+                                        <div class="row">
+                                            <div class="col-md-6 form-group">
+                                                <label for="etl_phoneNumber" class="control-label required">MOBILE PHONE
+                                                    NUMBER
+                                                </label>
+                                                <div class="form-inline">
+                                                    <select id="etl-country-code"
+                                                            class="form-control  etl-country-code pull-left required"
+                                                            name="countryCode" style="width: 25%"></select>
+                                                    <input type="text" name="etl_phoneNumber"
+                                                           class="form-control required"
+                                                           id="etl_phoneNumber" placeholder="Phone Number"
+                                                           style="width: 75%"
+                                                           oninput="this.value=this.value.toUpperCase()">
+                                                </div>
+
+                                            </div>
+                                            <div class="col-md-6 form-group">
+                                                <label for="etl_emailAddress"
+                                                       class="control-label required">EMAIL:</label>
+                                                <input
+                                                        type="email" name="etl_emailAddress" class="form-control"
+                                                        id="etl_emailAddress"
+                                                        placeholder="Email"
+                                                        oninput="this.value=this.value.toUpperCase()">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6 form-group">
+                                                <label for="tier_account" class="control-label required">DO YOU HAVE
+                                                    TIER ACCOUNT?
+                                                </label>
+
+                                                <select id="tier_account" class="form-control"
+                                                        name="tier_account">
+                                                    <option value="NO">No</option>
+                                                    <option value="YES">Yes</option>
+                                                </select>
+
+
+                                            </div>
+
+
+                                        </div>
+                                    </fieldset>
+
+                                    <h1>IDENTIFICATION DETAILS</h1>
+                                    <fieldset>
+                                        <h2></h2>
+                                        <div class="row">
+                                            <div class="col-md-6 form-group">
+                                                <label for="otherIdType" class="control-label">IDENTIFICATION
+                                                    TYPE:</label>
+                                                <select id="otherIdType" name="otherIdType" class="form-control">
+                                                    <option value="">Select IDENTIFICATION TYPE ...</option>
+                                                    <option value="PASSPORT">Passport No</option>
+                                                    <option value="VOTER">Voter ID</option>
+                                                    <option value="PENNO">NHIS</option>
+                                                    <option value="DRIVER">Driver's License</option>
+                                                    <option value="POLICY_NO">Policy Number</option>
+                                                    <option value="ID">ID Number</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6 form-group">
+                                                <label for="otherIdentificationNumber"
+                                                       class="control-label">IDENTIFICATION NUMBER:</label>
+                                                <input
+                                                        type="text" name="otherIdentificationNumber"
+                                                        class="form-control"
+                                                        id="otherIdentificationNumber"
+                                                        placeholder="">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6 form-group">
+                                                <label>National Pension Number <small>(required)</small></label>
+                                                <input name="socialSecurity" id="socialSecurity" type="text"
+                                                       class="form-control required"
+                                                       placeholder="National Pension Number" required>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+
+                                    <h1>PARENT DETAILS</h1>
+                                    <fieldset>
+                                        <div class="row">
+                                            <div class="col-md-6 form-group">
+                                                <label for="nameOfFather" class="control-label">NAME OF FATHER:</label>
+                                                <input
+                                                        type="text" name="nameOfFather" class="form-control"
+                                                        id="nameOfFather"
+                                                        placeholder="Name of Father"
+                                                        oninput="this.value=this.value.toUpperCase()">
+                                            </div>
+                                            <div class="col-md-6 form-group">
+                                                <label for="nameOfMother" class="control-label">NAME OF MOTHER:</label>
+                                                <input
+                                                        type="text" name="nameOfMother" class="form-control"
+                                                        id="nameOfMother"
+                                                        placeholder="Name of Mother"
+                                                        oninput="this.value=this.value.toUpperCase()">
+                                            </div>
+
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6 form-group">
+                                                <label for="addressOfFather" class="control-label">FATHER'S
+                                                    ADDRESS:</label>
+                                                <input
+                                                        type="text" name="addressOfFather" class="form-control"
+                                                        id="addressOfFather"
+                                                        placeholder="Father's Address"
+                                                        oninput="this.value=this.value.toUpperCase()">
+                                            </div>
+                                            <div class="col-md-6 form-group">
+                                                <label for="addressOfMother" class="control-label">MOTHER'S
+                                                    ADDRESS:</label>
+                                                <input
+                                                        type="text" name="addressOfMother" class="form-control"
+                                                        id="addressOfMother"
+                                                        placeholder="Mother's Address"
+                                                        oninput="this.value=this.value.toUpperCase()">
+                                            </div>
+
+                                        </div>
+                                    </fieldset>
+
+
+                                    <h1>BENEFICIARY DETAILS</h1>
+                                    <fieldset id="beneficiariesView"></fieldset>
+
+                                    <h1>Finish</h1>
+                                    <fieldset>
+                                        <h2>Declaration</h2>
+                                        <input id="acceptTerms" name="acceptTerms" type="checkbox"
+                                               class="form-control required">
+                                        <label id="declarationStatement" for="acceptTerms"></label>
+                                    </fieldset>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="float-right">
+            </div>
+            <div>
+                <strong>Copyright</strong> &COPY; 2021
+            </div>
+        </div>
+    </div>
+
+
+    <div id="overlay">
+        <div id="text">
+            <img id="gif" src="images/lock.gif" height="120" width="120">
+            <div id="msg" style="display: none;">
+                <h4>Please try again</h4>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Mainly scripts -->
+<script src="template/js/jquery-3.1.1.min.js"></script>
+<script src="template/js/popper.min.js"></script>
+<script src="template/js/bootstrap.js"></script>
+<script src="template/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+<script src="template/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+<!-- Steps -->
+<script src="template/js/plugins/steps/jquery.steps.min.js"></script>
+<!-- Jquery Validate -->
+<script src="template/js/plugins/validate/jquery.validate.min.js"></script>
+<!-- include the script -->
+<script src="alertifyjs/alertify.min.js"></script>
+<script type="text/javascript" src="app.js"></script>
+<script type="text/javascript" src="etl.js"></script>
+<script type="text/javascript">
+    getLandingPageContent();
+</script>
+<script>
+    $(document).ready(function () {
+
+        createBeneficiariesForm(function (c) {
+            $('#beneficiariesView').html(c);
+
+            winReady();
+
+            $("#wizard").steps();
+            $("#form").steps({
+                bodyTag: "fieldset",
+                onStepChanging: function (event, currentIndex, newIndex) {
+                    // Always allow going backward even if the current step contains invalid fields!
+                    if (currentIndex > newIndex) {
+                        return true;
+                    }
+
+                    let form = $(this);
+                    form.valid();
+
+                    if (currentIndex === 0) {
+                        return FETCH_SPONSOR_DETAILS();
+                    }
+
+                    if (currentIndex === 11) {
+                        if(!totalAllocationReached(function () {
+                            err('Provide more beneficiaries')
+                        })){
+                            return false;
+                        }
+                    }
+
+                    // Clean up if user went backward before
+                    if (currentIndex < newIndex) {
+                        // To remove error styles
+                        $(".body:eq(" + newIndex + ") label.error", form).remove();
+                        $(".body:eq(" + newIndex + ") .error", form).removeClass("error");
+                    }
+
+                    // Disable validation on fields that are disabled or hidden.
+                    form.validate().settings.ignore = ":disabled,:hidden";
+
+                    // Start validation; Prevent going forward if false
+                    return form.valid();
+                },
+                onStepChanged: function (event, currentIndex, priorIndex) {
+
+                },
+                onFinishing: function (event, currentIndex) {
+                    let form = $(this);
+
+                    // Disable validation on fields that are disabled.
+                    // At this point it's recommended to do an overall check (mean ignoring only disabled fields)
+                    form.validate().settings.ignore = ":disabled";
+
+                    // Start validation; Prevent form submission if false
+                    return form.valid();
+                },
+                onFinished: function (event, currentIndex) {
+                    let form = $(this);
+
+                    // Submit form input
+                    registerEtl(form)
+                }
+            }).validate({
+                errorPlacement: function (error, element) {
+                    element.before(error);
+                },
+                rules: {
+                    confirm: {
+                        equalTo: "#password"
+                    }
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

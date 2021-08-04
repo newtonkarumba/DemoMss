@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Become A Member</title>
+    <link href="template/css/bootstrap.min.css" rel="stylesheet">
+    <link href="template/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="template/css/plugins/steps/jquery.steps.css" rel="stylesheet">
+    <link href="template/css/animate.css" rel="stylesheet">
+    <link href="template/css/style.css" rel="stylesheet">
+
+    <!-- include the style -->
+    <link rel="stylesheet" href="alertifyjs/css/alertify.min.css"/>
+    <!-- include a theme -->
+    <link rel="stylesheet" href="alertifyjs/css/themes/default.min.css"/>
+
+    <link rel="stylesheet" href="app.css">
+</head>
+<body class="top-navigation" oncontextmenu="return false">
+<div id="wrapper">
+    <div id="page-wrapper" class="gray-bg">
+        <div class="wrapper wrapper-content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="ibox-content m-b-sm border-bottom">
+                            <div class="text-center p-lg">
+                                <a href="./" id="sitelogo">
+                                    <!--                                    <img src="images/SystechLogo.PNG" width="auto" height="88">-->
+                                </a>
+                                <h2>Become A Member</h2>
+                                <h4>By visiting this page, it shows your interest in becoming a member.<br> This wizard
+                                    will guide you to successfully submit your details for processing.</h4>
+                                <a href="./">
+                                    <button class="btn btn-primary btn-sm" style="background-color: #025b80"><i
+                                            class="fa fa-arrow-alt-circle-left"></i> Home
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="ibox">
+                            <div class="ibox-content">
+                                <form id="form" class="wizard-big"
+                                      enctype="multipart/form-data"
+                                      onsubmit="return false">
+
+
+
+                                    <h1>SCHEME & EMPLOYER</h1>
+                                    <fieldset>
+                                        <div class="row">
+                                            <div class="col-lg-3"></div>
+                                            <div class="col-lg-6">
+                                                <h4>Provide employer and cost center details</h4>
+                                                <div class="form-group">
+                                                    <label for="schemeId">Scheme</label>
+                                                    <select id="schemeId" name="schemeId" class="form-control required"
+                                                            required="required" onchange="loadSponsor()"></select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="employerRefNo">Employer</label>
+                                                    <select id="employerRefNo" name="employerRefNo"
+                                                            class="form-control required"
+                                                            required="required"  onchange="loadSponsorDetails(this.value)"></select>
+                                                </div>
+                                                <div id="pg" style="display: none">
+                                                    <center><img src="images/ajax-loader.gif"></center>
+                                                </div>
+                                                <span id="mimsg" style="color:darkred;"></span>
+                                                <div class="form-group">
+                                                    <input id="schemeName" name="schemeName" type="text" value=""
+                                                           class="form-control required" hidden>
+                                                    <input id="sponsorId" name="sponsorId" type="text" value=""
+                                                           class="form-control required" hidden>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3"></div>
+                                        </div>
+                                    </fieldset>
+
+                                    <h1>PERSONAL DETAILS</h1>
+                                    <fieldset>
+                                        <h4>Provide personal information details</h4>
+                                        <div class="row">
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
+                                                    <label for="title">Title</label>
+                                                    <select id="title" name="title" class="form-control required"
+                                                            required>
+                                                        <option selected="selected">Select Title ...</option>
+                                                        <option value="PROF">Prof</option>
+                                                        <option value="DR">Dr</option>
+                                                        <option value="MR">Mr</option>
+                                                        <option value="MRS">Mrs</option>
+                                                        <option value="REV">Rev</option>
+                                                        <option value="HON">Hon</option>
+                                                        <option value="ENG">Eng</option>
+                                                        <option value="MISS">Ms</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
+                                                    <label>First Name </label>
+                                                    <input id="firstName" name="firstname" type="text"
+                                                           class="form-control required" placeholder="First Name"
+                                                           required>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
+                                                    <label>Last Name </label>
+                                                    <input id="lastName" name="lastname" type="text"
+                                                           class="form-control required" placeholder="Last Name"
+                                                           required>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
+                                                    <label>Other Names </label>
+                                                    <input id="othernames" name="othernames" type="text"
+                                                           class="form-control" placeholder="Other Names">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
+                                                    <label for="title">Gender</label>
+                                                    <select id="gender" name="gender" class="form-control required"
+                                                            required>
+                                                        <option disabled selected>Select...</option>
+                                                        <option value="MALE">Male</option>
+                                                        <option value="FEMALE">Female</option>
+                                                        <option value="UNKNOWN">Unknown</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
+                                                    <label for="maritalStatus">Marital Status</label>
+                                                    <select id="maritalStatus" name="maritalStatus"
+                                                            class="form-control required" required>
+                                                        <option selected disabled>Select...</option>
+                                                        <option value="SINGLE">Single</option>
+                                                        <option value="MARRIED">Married</option>
+                                                        <option value="SEPARATED">Separated</option>
+                                                        <option value="DIVORCED">Divorced</option>
+                                                        <option value="WIDOWED">Widowed</option>
+                                                        <option value="ABANDONED">Abandoned</option>
+                                                        <option value="NOT_SPECIFIED">Not Specified</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
+                                                    <label for="dateOfBirth" class="control-label">Date of Birth</label>
+                                                    <input type="date" name="dateOfBirth" class="form-control required"
+                                                           id="dateOfBirth" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
+                                                    <label for="idNumber" class="control-label">National ID</label>
+                                                    <input type="text" name="idNumber" class="form-control"
+                                                           id="idNumber">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
+                                                    <label for="identificationDocument" class="control-label">Other Identification Type</label>
+                                                    <select id="identificationDocument" name="identificationDocument"
+                                                            class="form-control">
+                                                        <option selected disabled>Select...</option>
+                                                        <option value="PASSPORT">Passport No</option>
+                                                        <option value="VOTER">Voter ID</option>
+                                                        <option value="PENNO">NHIS</option>
+                                                        <option value="DRIVER">Driver's License</option>
+                                                        <option value="POLICY_NO">Policy Number</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
+                                                    <label for="identificationDocumentNumber" class="control-label">Other Identification Number</label>
+                                                    <input type="text" name="identificationDocumentNumber"
+                                                           class="form-control"
+                                                           id="identificationDocumentNumber">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
+                                                    <label for="nationality" class="control-label">Nationality</label>
+                                                    <input type="text" name="nationality" class="form-control required"
+                                                           id="nationality" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3"></div>
+                                        </div>
+                                    </fieldset>
+
+                                    <h1>CONTACT INFORMATION</h1>
+                                    <fieldset>
+                                        <h4>Provide address and location details</h4>
+                                        <div class="row">
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
+                                                    <label for="phoneNumber" class="control-label">Primary Phone</label>
+                                                    <input type="tel" name="phoneNumber" class="form-control required"
+                                                           id="phoneNumber" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
+                                                    <label for="secondaryPhoneNumber" class="control-label">Secondary
+                                                        Phone</label>
+                                                    <input type="tel" name="secondaryPhoneNumber" class="form-control"
+                                                           id="secondaryPhoneNumber">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
+                                                    <label for="emailAddress" class="control-label">Email</label>
+                                                    <input type="email" name="emailAddress"
+                                                           class="form-control" id="emailAddress">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
+                                                    <label for="postalAddress"
+                                                           class="control-label">Postal Address</label>
+                                                    <input type="text" name="postalAddress"
+                                                           class="form-control required" id="postalAddress">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
+                                                    <label for="residentialAddress" class="control-label">Residential Address</label>
+                                                    <input type="text" name="residentialAddress" class="form-control" id="residentialAddress">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
+                                                    <label for="road"
+                                                           class="control-label">Road</label>
+                                                    <input type="text" name="road" class="form-control" id="road">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
+                                                    <label for="city" class="control-label">Town</label>
+                                                    <input type="text" name="city" class="form-control" id="city">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
+                                                    <label for="country" class="control-label">Country</label>
+                                                    <select id="country" name="country" class="form-control required" required="required"
+                                                            onchange="processOtherLocationDetails()"></select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+
+                                    <h1>PLACE OF BIRTH INFORMATION</h1>
+                                    <fieldset>
+                                        <h4>Provide place of birth details</h4>
+                                        <div class="row">
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <label for="pobPlaceOfBirth">Place of Birth</label>
+                                                    <select id="pobPlaceOfBirth" name="pobPlaceOfBirth"
+                                                            class="form-control"
+                                                            onchange="getTraditionalAuthorities(this.value,'pobTraditionalAuthority');">
+<!--                                                            onchange="onPobPlaceOfBirthChange()">-->
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <label for="pobTraditionalAuthority">Traditional Authority</label>
+                                                    <select id="pobTraditionalAuthority" name="pobTraditionalAuthority"
+                                                            class="form-control"
+                                                            onchange="getVillages(this.value,'pobVillage');">
+<!--                                                            onchange="onPobTraditionalAuthorityChange()">-->
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <label for="pobVillage">Village</label>
+                                                    <select id="pobVillage" name="pobVillage" class="form-control"></select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+
+                                    <h1>HOME ADDRESS INFORMATION</h1>
+                                    <fieldset>
+                                        <h4>Provide permanent home address details</h4>
+                                        <div class="row">
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <label for="phmPlaceOfBirth">District</label>
+                                                    <select id="phmPlaceOfBirth" name="phmPlaceOfBirth"
+                                                            class="form-control"
+                                                            onchange="getTraditionalAuthorities(this.value,'phmTraditionalAuthority');">
+<!--                                                            onchange="onPhmPlaceOfBirthChange()">-->
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <label for="phmTraditionalAuthority">Traditional Authority</label>
+                                                    <select id="phmTraditionalAuthority" name="phmTraditionalAuthority"
+                                                            class="form-control"
+                                                            onchange="getVillages(this.value,'phmVillage');">
+<!--                                                            onchange="onPhmTraditionalAuthorityChange()">-->
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <label for="phmVillage">Village</label>
+                                                    <select id="phmVillage" name="phmVillage" class="form-control"></select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+
+                                    <h1>EMPLOYMENT INFORMATION</h1>
+                                    <fieldset>
+                                        <h4>Provide employment details</h4>
+                                        <div class="row">
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
+                                                    <label for="employed">Employed?</label>
+                                                    <select id="employed" name="employed" class="form-control required" onchange="toggleEmployment()">
+                                                        <option disabled selected>Select...</option>
+                                                        <option value="YES">Yes</option>
+                                                        <option value="NO">No</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
+                                                    <label for="staffNo" class="control-label">Staff Number</label>
+                                                    <input type="text" name="staffNo" class="form-control "
+                                                           id="staffNo">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
+                                                    <label for="nssn" class="control-label">National Pension Number</label>
+                                                    <input type="text" name="nssn" class="form-control "
+                                                           id="nssn">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
+                                                    <label for="designation" class="control-label">Designation</label>
+                                                    <input type="text" name="designation" class="form-control "
+                                                           id="designation">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
+                                                    <label for="department" class="control-label">Department</label>
+                                                    <input type="text" name="department" class="form-control "
+                                                           id="department">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
+                                                    <label for="dateOfAppointment" class="control-label">Date Of Appointment</label>
+                                                    <input type="date" name="dateOfAppointment" class="form-control "
+                                                           id="dateOfAppointment">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
+                                                    <label for="currentMonthlySalary" class="control-label">Current Monthly Salary</label>
+                                                    <input type="number" name="currentMonthlySalary" min="0"
+                                                           class="form-control "
+                                                           id="currentMonthlySalary">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3"></div>
+                                        </div>
+                                    </fieldset>
+
+                                    <h1>DOCUMENTS</h1>
+                                    <fieldset>
+                                        <div class="row">
+                                            <div class="col-lg-3"></div>
+                                            <div class="col-lg-6">
+                                                <h2>Attach documents</h2>
+                                                <div class="form-group">
+                                                    <label for="files"><small>National ID, Beneficiary List, Any Other</small></label>
+                                                    <input id="files" name="file" type="file"
+                                                           class="form-control" multiple>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3"></div>
+                                        </div>
+                                    </fieldset>
+
+                                    <h1>Finish</h1>
+                                    <fieldset>
+                                        <div class="row">
+                                            <div class="col-lg-3"></div>
+                                            <div class="col-lg-6">
+                                                <h2>Declaration</h2>
+                                                <div class="form-group">
+                                                    <input id="acceptTerms" name="acceptTerms" type="checkbox"
+                                                           class="form-control required">
+                                                    <label id="declarationStatement" for="acceptTerms"></label>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3"></div>
+                                        </div>
+                                    </fieldset>
+
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="float-right">
+            </div>
+            <div>
+                <strong>Copyright</strong> &COPY; 2021
+            </div>
+        </div>
+    </div>
+
+    <div id="overlay">
+        <div id="text">
+            <img id="gif" src="images/lock.gif" height="120" width="120">
+            <div id="msg" style="display: none;">
+                <h4>Please try again</h4>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Mainly scripts -->
+<script src="template/js/jquery-3.1.1.min.js"></script>
+<script src="template/js/popper.min.js"></script>
+<script src="template/js/bootstrap.js"></script>
+<script src="template/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+<script src="template/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+<!-- Steps -->
+<script src="template/js/plugins/steps/jquery.steps.min.js"></script>
+<!-- Jquery Validate -->
+<script src="template/js/plugins/validate/jquery.validate.min.js"></script>
+<!-- include the script -->
+<script src="alertifyjs/alertify.min.js"></script>
+<!--<script type="text/javascript" src="js/jquery.ajaxfileupload.js"></script>-->
+<script type="text/javascript" src="app.js"></script>
+<script type="text/javascript" src="districts.js"></script>
+<script type="text/javascript" src="traditionalAuthorities.js"></script>
+<script type="text/javascript" src="villages.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#wizard").steps();
+        $("#form").steps({
+            bodyTag: "fieldset",
+            onStepChanging: function (event, currentIndex, newIndex) {
+                // Always allow going backward even if the current step contains invalid fields!
+                if (currentIndex > newIndex) {
+                    return true;
+                }
+
+                // Forbid suppressing "Warning" step if the user is to young
+                // if (newIndex === 3 && Number($("#age").val()) < 18) {
+                //     return false;
+                // }
+
+                var form = $(this);
+
+                // Clean up if user went backward before
+                if (currentIndex < newIndex) {
+                    // To remove error styles
+                    $(".body:eq(" + newIndex + ") label.error", form).remove();
+                    $(".body:eq(" + newIndex + ") .error", form).removeClass("error");
+                }
+
+                // Disable validation on fields that are disabled or hidden.
+                form.validate().settings.ignore = ":disabled,:hidden";
+
+                // Start validation; Prevent going forward if false
+                return form.valid();
+            },
+            onStepChanged: function (event, currentIndex, priorIndex) {
+                // Suppress (skip) "Warning" step if the user is old enough.
+                // if (currentIndex === 2 && Number($("#age").val()) >= 18) {
+                //     $(this).steps("next");
+                // }
+
+                // Suppress (skip) "Warning" step if the user is old enough and wants to the previous step.
+                // if (currentIndex === 2 && priorIndex === 3) {
+                //     $(this).steps("previous");
+                // }
+            },
+            onFinishing: function (event, currentIndex) {
+                let form = $(this);
+
+                // Disable validation on fields that are disabled.
+                // At this point it's recommended to do an overall check (mean ignoring only disabled fields)
+                form.validate().settings.ignore = ":disabled";
+
+                // Start validation; Prevent form submission if false
+                return form.valid();
+            },
+            onFinished: function (event, currentIndex) {
+                let form = $(this);
+
+                // Submit form input
+                newMemberRegister(form)
+            }
+        }).validate({
+            errorPlacement: function (error, element) {
+                element.before(error);
+            },
+            rules: {
+                confirm: {
+                    equalTo: "#password"
+                }
+            }
+        });
+
+        (function () {
+            let today = new Date(),
+                yrToday = today.getFullYear();
+            $('#dateOfBirth').attr('max', `${yrToday - 16}-01-01`);
+
+            getCountriesHTML(function (content) {
+                $('#country').html(content);
+            })
+        })();
+
+        getSchemes()
+        setTimeout(function () {
+            getLandingPageContent();
+        }, 3000)
+
+    });
+</script>
+</body>
+</html>

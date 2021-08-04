@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Email templates</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link href="template/css/bootstrap.min.css" rel="stylesheet">
+    <link href="template/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="template/css/plugins/steps/jquery.steps.css" rel="stylesheet">
+    <link href="template/css/animate.css" rel="stylesheet">
+    <link href="template/css/plugins/summernote/summernote-bs4.css" rel="stylesheet">
+    <link href="template/css/style.css" rel="stylesheet">
+
+    <!-- include the style -->
+    <link rel="stylesheet" href="alertifyjs/css/alertify.min.css"/>
+    <!-- include a theme -->
+    <link rel="stylesheet" href="alertifyjs/css/themes/default.min.css"/>
+
+    <link rel="stylesheet" href="app.css">
+</head>
+<body class="top-navigation" oncontextmenu="return false">
+<div id="wrapper">
+    <div id="page-wrapper" class="gray-bg">
+        <div class="wrapper wrapper-content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="ibox-content m-b-sm border-bottom">
+                            <div class="text-center p-lg">
+                                <a href="./" id="sitelogo"></a>
+                                <h2>Add Email Templates</h2>
+                                <h4></h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="ibox ">
+                            <div class="ibox-title">
+                                <h5>Email Template <small></small></h5>
+                                <div class="ibox-tools"></div>
+                            </div>
+                            <div class="ibox-content">
+                                <div class="row">
+                                    <div class="col-sm-12 b-r">
+                                        <h4 class="m-t-none m-b"></h4>
+                                        <form role="form" onsubmit="return false">
+                                            <div class="form-group">
+                                                <label>Category</label>
+                                                <select class="form-control" id="category"
+                                                        onchange="loadEmailTemplate()" required></select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Subject Title</label>
+                                                <input type="text" id="subject" placeholder="Enter subject" class="form-control" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <span style="color: darkred"><small id="namedKeys"></small></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="summernote">
+                                                    Email Template
+                                                </label>
+                                                <div id="summernote" class="summernote">
+                                                    <p>Type here...</p>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="smsTemplate">SMS Template <small>(Leave blank if not using SMSs.<span
+                                                        style="color: darkred">DO NOT use html</span>)</small>
+                                                </label>
+                                                <textarea type="text" id="smsTemplate" rows="8"  class="form-control"></textarea>
+                                            </div>
+                                            <div>
+                                                <button class="btn btn-sm btn-primary float-right m-t-n-xs"
+                                                        type="submit" onclick="saveEmailTemplate()">
+                                                    <strong>Save template</strong>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="float-right">
+            </div>
+            <div>
+                <strong>Copyright</strong> &COPY; 2021
+            </div>
+        </div>
+    </div>
+
+    <div id="overlay">
+        <div id="text">
+            <img id="gif" src="images/lock.gif" height="120" width="120">
+            <div id="msg" style="display: none;">
+                <h4>Please try again</h4>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Mainly scripts -->
+<script src="template/js/jquery-3.1.1.min.js"></script>
+<script src="template/js/popper.min.js"></script>
+<script src="template/js/bootstrap.js"></script>
+<script src="template/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+<script src="template/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+<!-- Steps -->
+<script src="template/js/plugins/steps/jquery.steps.min.js"></script>
+
+<!-- SUMMERNOTE -->
+<script src="template/js/plugins/summernote/summernote-bs4.js"></script>
+
+<!-- Jquery Validate -->
+<script src="template/js/plugins/validate/jquery.validate.min.js"></script>
+<!-- include the script -->
+<script src="alertifyjs/alertify.min.js"></script>
+<script type="text/javascript" src="app.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.summernote').summernote();
+        getEmailTemplateEnums(function () {
+            getLandingPageContent();
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statement</title>
+    <link href="../template/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../template/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="../template/css/plugins/dataTables/datatables.min.css" rel="stylesheet">
+
+    <link href="../template/css/animate.css" rel="stylesheet">
+    <link href="../template/css/style.css" rel="stylesheet">
+    <script type="text/javascript" src="../numeral.min.js"></script>
+</head>
+<body oncontextmenu="return false">
+<div class="row">
+    <div class="col-lg-2"></div>
+    <div class="col-lg-8">
+        <div class="ibox ">
+            <div class="ibox-title">
+                <h5 id="rptTitle">Report</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-hover dataTables-example">
+                        <thead>
+                        <tr>
+                            <th>NAME</th>
+                            <th>EMAIL</th>
+                            <th>PHONE</th>
+                            <th>NSSN NO</th>
+                            <th>DATE REGISTERED</th>
+                        </tr>
+                        </thead>
+                        <tbody id="tbody"></tbody>
+                        <!--                        <tfoot>-->
+                        <!--                        <tr>-->
+                        <!--                            <th>NAME</th>-->
+                        <!--                            <th>EMAIL</th>-->
+                        <!--                            <th>PHONE</th>-->
+                        <!--                            <th>NSSN NO</th>-->
+                        <!--                        </tr>-->
+                        <!--                        </tfoot>-->
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-2"></div>
+</div>
+
+<!-- Mainly scripts -->
+<script src="../template/js/jquery-3.1.1.min.js"></script>
+<script src="../template/js/popper.min.js"></script>
+<script src="../template/js/bootstrap.js"></script>
+<script src="../template/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+<script src="../template/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+<script src="../template/js/plugins/dataTables/datatables.min.js"></script>
+<script src="../template/js/plugins/dataTables/dataTables.bootstrap4.min.js"></script>
+
+<!-- Custom and plugin javascript -->
+<script src="../template/js/inspinia.js"></script>
+<script src="../template/js/plugins/pace/pace.min.js"></script>
+
+<script type="text/javascript" src="../app.js"></script>
+
+<!-- Page-Level Scripts -->
+<script>
+    // let rptTitle = sessionStorage.getItem('rptTitle');
+    // if (!(rptTitle)) {
+    //     rptTitle = 'Report'
+    // }
+    $('#rptTitle').html("Mss Users Listing");
+
+    let UsersReportApiParams = localStorage.getItem("UsersReportApiParams");
+    $(document).ready(function () {
+        $.getJSON(`.${baseUrl}/api/${UsersReportApiParams}`, function (data) {
+            let content = ``;
+            data = data.data;
+            for (let i = 0; i < data.length; i++) {
+                let obj = data[i],
+                    details = obj.userDetails;
+                // console.log(details)
+                content += `<tr class="gradeA">
+                            <td>${details.name}</td>
+                            <td>${obj.email}</td>
+                            <td>${details.cellPhone}</td>
+                            <td>${details.nationalPenNo}</td>
+                            <td>${obj.shortDateTime}</td>
+                            </tr>`;
+            }
+            $("#tbody").html(content);
+            $('.dataTables-example').DataTable({
+                pageLength: 25,
+                responsive: true,
+                dom: '<"html5buttons"B>lTfgitp',
+                buttons: [
+                    {extend: 'copy'},
+                    {extend: 'csv'},
+                    {extend: 'excel', title: "Mss Users"},
+                    {extend: 'pdf', title: "Mss Users"},
+                    {
+                        extend: 'print',
+                        customize: function (win) {
+                            $(win.document.body).addClass('white-bg');
+                            $(win.document.body).css('font-size', '10px');
+
+                            $(win.document.body).find('table')
+                                .addClass('compact')
+                                .css('font-size', 'inherit');
+                        }
+                    }
+                ]
+            });
+        })
+
+        setTimeout(function () {
+            getLandingPageContent()
+        }, 1000)
+    });
+</script>
+</body>
+</html>

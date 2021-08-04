@@ -1,0 +1,294 @@
+
+<h1>BENEFICIARY DETAILS</h1>
+<fieldset>
+    <div class="row">
+        <div class="col-md-6 form-group">
+            <label for="beneficiaryName1" class="control-label required">NAME
+                OF
+                BENEFICIARY:</label> <input
+                type="text" name="beneficiaryName1" class="form-control"
+                id="beneficiaryName1"
+                placeholder="Beneficiary Name"
+                oninput="this.value=this.value.toUpperCase()">
+        </div>
+        <div class="col-md-6 form-group">
+            <label for="benDateOfBirth1" class="control-label required">Date
+                Of
+                Birth:</label> <input type="text" readonly="readonly"
+                                      name="benDateOfBirth1"
+                                      class="form-control datepicker"
+                                      id="benDateOfBirth1"
+                                      placeholder="Date Of Birth">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 form-group">
+            <label for="benRelationship1" class="control-label required">RELATIONSHIP
+                OF BENEFICIARY TO CONTRIBUTOR:</label> <select
+                name="benRelationship1" id="benRelationship1"
+                class="form-control">
+            <option selected disabled>Select...</option>
+            <option value="wife">WIFE</option>
+            <option value="husband">HUSBAND</option>
+            <option value="daughter">DAUGHTER</option>
+            <option value="son">SON</option>
+            <option value="mother">MOTHER</option>
+            <option value="father">FATHER</option>
+            <option value="brother">BROTHER</option>
+            <option value="sister">SISTER</option>
+            <option value="other">OTHER</option>
+        </select>
+        </div>
+        <div class="col-md-6 form-group">
+            <label for="benPostalAddress1" class="control-label required">POSTAL
+                ADDRESS OF BENEFICARY</label>
+            <input
+                    type="text" name="benPostalAddress1" class="form-control"
+                    id="benPostalAddress1"
+                    placeholder="Postal address"
+                    oninput="this.value=this.value.toUpperCase()">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 form-group">
+            <label for="benEmail1" class="control-label">EMAIL ADDRESS OF
+                BENEFICARY:</label> <input
+                type="email" name="benEmail1" class="form-control"
+                id="benEmail1"
+                placeholder="Email"
+                oninput="this.value=this.value.toUpperCase()">
+        </div>
+        <div class="col-md-6 form-group">
+            <label for="benPhoneNumber1" class="control-label">BENEFICIARY
+                MOBILE PHONE NUMBER :</label>
+            <div class="form-inline">
+                <select class="form-control  etl-country-code pull-left"
+                        name="country-code" style="width: 25%;"></select>
+                <input type="text" name="benPhoneNumber1"
+                       class="form-control"
+                       id="benPhoneNumber1" placeholder="Phone Number"
+                       style="width: 75%;"
+                       oninput="this.value=this.value.toUpperCase()">
+            </div>
+        </div>
+        <div class="col-md-6 form-group">
+            <label for="benAllocation1" class="control-label required">PERCENTAGE
+                ALLOCATION TO BENEFICARY
+                (To Total 100%):</label>
+            <input
+                    type="number" name="benAllocation1" class="form-control"
+                    id="benAllocation1" min="0" max=""
+                    onchange="allocaton('benAllocation1')"
+                    placeholder="Allocation">
+        </div>
+        <div>
+            <button class="btn btn-success" id="addMore1" type="button"><i
+                    class="glyphicon glyphicon-plus"></i>ADD BENEFICIARY
+            </button>
+        </div>
+        <div>
+            <button class="btn btn-danger" id="removeBen1" type="button"><i
+                    class="glyphicon glyphicon-minus"></i> Remove
+            </button>
+        </div>
+    </div>
+</fieldset>
+
+<h1>BENEFICIARY DETAILS</h1>
+<fieldset>
+    <div class="row">
+        <div class="col-md-6 form-group">
+            <label for="beneficiaryName2" class="control-label required">NAME
+                OF
+                BENEFICIARY:</label>
+            <input
+                    type="text" name="beneficiaryName2" class="form-control"
+                    id="beneficiaryName2"
+                    placeholder="Beneficiary Name"
+                    oninput="this.value=this.value.toUpperCase()">
+        </div>
+        <div class="col-md-6 form-group">
+            <label for="benDateOfBirth2" class="control-label required">Date
+                Of
+                Birth:</label>
+            <input type="text" readonly="readonly"
+                   name="benDateOfBirth2"
+                   class="form-control datepicker"
+                   id="benDateOfBirth2"
+                   placeholder="Date Of Birth">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 form-group">
+            <label for="benRelationship2" class="control-label required">RELATIONSHIP
+                OF
+                BENEFICIARY TO
+                CONTRIBUTOR:</label>
+            <select
+                    name="benRelationship2" id="benRelationship2"
+                    class="form-control">
+                <option selected disabled>Select...</option>
+                <option value="wife">WIFE</option>
+                <option value="husband">HUSBAND</option>
+                <option value="daughter">DAUGHTER</option>
+                <option value="son">SON</option>
+                <option value="mother">MOTHER</option>
+                <option value="father">FATHER</option>
+                <option value="brother">BROTHER</option>
+                <option value="sister">SISTER</option>
+                <option value="other">OTHER</option>
+            </select>
+        </div>
+        <div class="col-md-6 form-group">
+            <label for="benPostalAddress2" class="control-label required">POSTAL
+                ADDRESS
+                OF
+                BENEFICARY</label>
+            <input
+                    type="text" name="benPostalAddress2" class="form-control"
+                    id="benPostalAddress2"
+                    placeholder="Postal address"
+                    oninput="this.value=this.value.toUpperCase()">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 form-group">
+            <label for="benEmail2" class="control-label">EMAIL ADDRESS OF
+                BENEFICARY:</label>
+            <input
+                    type="email" name="benEmail2" class="form-control"
+                    id="benEmail2"
+                    placeholder="Email"
+                    oninput="this.value=this.value.toUpperCase()">
+        </div>
+        <div class="col-md-6 form-group">
+            <label for="benPhoneNumber2" class="control-label">BENEFICIARY
+                MOBILE
+                PHONE NUMBER :</label>
+            <div class="form-inline">
+                <select class="form-control  etl-country-code pull-left"
+                        name="country-code" style="width: 25%;"></select>
+                <input type="text" name="benPhoneNumber2"
+                       class="form-control"
+                       id="benPhoneNumber2" placeholder="Phone Number"
+                       style="width: 75%;"
+                       oninput="this.value=this.value.toUpperCase()">
+            </div>
+        </div>
+        <div class="col-md-6 form-group">
+            <label for="benAllocation2" class="control-label required">PERCENTAGE
+                ALLOCATION
+                TO
+                BENEFICARY
+                (To Total
+                100%):</label> <input
+                type="number" name="benAllocation2" class="form-control"
+                id="benAllocation2" min="0" max=""
+                onchange="allocaton('benAllocation2')"
+                placeholder="Allocation">
+        </div>
+        <div>
+            <button class="btn btn-success" id="addMore2" type="button"><i
+                    class="glyphicon glyphicon-plus"></i> ADD BENEFICIARY
+            </button>
+        </div>
+        <div>
+            <button class="btn btn-danger" id="removeBen2" type="button"><i
+                    class="glyphicon glyphicon-minus"></i> Remove
+            </button>
+        </div>
+    </div>
+</fieldset>
+
+<h1>BENEFICIARY DETAILS</h1>
+<fieldset>
+    <div class="row">
+        <div class="col-md-6 form-group">
+            <label for="beneficiaryName3" class="control-label required">NAME
+                OF
+                BENEFICIARY:</label> <input
+                type="text" name="beneficiaryName3" class="form-control"
+                id="beneficiaryName3"
+                placeholder="Beneficiary Name"
+                oninput="this.value=this.value.toUpperCase()">
+        </div>
+        <div class="col-md-6 form-group">
+            <label for="benDateOfBirth3" class="control-label required">Date
+                Of
+                Birth:</label> <input type="text" readonly="readonly"
+                                      name="benDateOfBirth3"
+                                      class="form-control datepicker"
+                                      id="benDateOfBirth3"
+                                      placeholder="Date Of Birth">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 form-group">
+            <label for="benRelationship3" class="control-label required">RELATIONSHIP
+                OF
+                BENEFICIARY TO
+                CONTRIBUTOR:</label>
+            <select
+                    name="benRelationship3" id="benRelationship3"
+                    class="form-control">
+                <option selected disabled>Select...</option>
+                <option value="wife">WIFE</option>
+                <option value="husband">HUSBAND</option>
+                <option value="daughter">DAUGHTER</option>
+                <option value="son">SON</option>
+                <option value="mother">MOTHER</option>
+                <option value="father">FATHER</option>
+                <option value="brother">BROTHER</option>
+                <option value="sister">SISTER</option>
+                <option value="other">OTHER</option>
+            </select>
+        </div>
+        <div class="col-md-6 form-group">
+            <label for="benPostalAddress3" class="control-label required">POSTAL
+                ADDRESS
+                OF
+                BENEFICARY</label> <input
+                type="text" name="benPostalAddress3" class="form-control"
+                id="benPostalAddress3"
+                placeholder="Postal address"
+                oninput="this.value=this.value.toUpperCase()">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 form-group">
+            <label for="benEmail3" class="control-label">EMAIL ADDRESS OF
+                BENEFICARY:</label> <input
+                type="email" name="benEmail3" class="form-control"
+                id="benEmail3"
+                placeholder="Email"
+                oninput="this.value=this.value.toUpperCase()">
+        </div>
+        <div class="col-md-6 form-group">
+            <label for="benPhoneNumber3" class="control-label">BENEFICIARY
+                MOBILE
+                PHONE NUMBER :</label>
+            <div class="form-inline">
+                <select class="form-control  etl-country-code pull-left"
+                        name="country-code" style="width: 25%;"></select>
+                <input type="text" name="benPhoneNumber3"
+                       class="form-control"
+                       id="benPhoneNumber3" placeholder="Phone Number"
+                       style="width: 75%;"
+                       oninput="this.value=this.value.toUpperCase()">
+            </div>
+        </div>
+        <div class="col-md-6 form-group">
+            <label for="benAllocation3" class="control-label required">PERCENTAGE
+                ALLOCATION TO BENEFICARY (To Total 100%):</label>
+            <input
+                    type="number" name="benAllocation3" class="form-control"
+                    id="benAllocation3" min="0" max=""
+                    placeholder="Allocation">
+        </div>
+        <div>
+            <button class="btn btn-danger" id="removeBen3" type="button"><i
+                    class="glyphicon glyphicon-minus"></i> Remove
+            </button>
+        </div>
+    </div>
+</fieldset>

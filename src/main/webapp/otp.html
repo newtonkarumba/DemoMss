@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>OTP</title>
+
+    <link href="template/css/bootstrap.min.css" rel="stylesheet">
+    <link href="template/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="template/css/animate.css" rel="stylesheet">
+    <link href="template/css/style.css" rel="stylesheet">
+    <!-- include the style -->
+    <link rel="stylesheet" href="alertifyjs/css/alertify.min.css"/>
+    <!-- include a theme -->
+    <link rel="stylesheet" href="alertifyjs/css/themes/default.min.css"/>
+    <link rel="stylesheet" href="app.css">
+
+</head>
+
+<body class="gray-bg">
+<div class="lock-word animated fadeInDown">
+    <!--    <span class="first-word">Account</span><span>Verification</span>-->
+</div>
+<div class="passwordBox middle-box  animated fadeInDown">
+    <div class="ibox-content">
+        <div class="m-b-md"></div>
+        <a href="./" id="sitelogo">
+            <img src="images/SystechLogo.PNG" width="auto" height="88">
+        </a>
+        <h2 class="font-bold">Account Verification</h2>
+        <p>A verification code will be sent to email or phone number as indicated below. Use the code to
+            unlock access to your account</p>
+        <div class="row" style="margin-top: 60px">
+            <div class="col-lg-12">
+                <div class="ibox">
+                    <div class="ibox-title">
+                        <h5>Send Verification Code</h5>
+                        <div class="ibox-tools">
+                        </div>
+                    </div>
+                    <div class="ibox-content no-padding">
+                        <ul class="list-group" id="myIdentifiers"></ul>
+                    </div>
+                    <div class="ibox-footer">
+                        <a href="./"  class="btn btn-default block full-width" type="submit">Cancel</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="otp" class="modal fade" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12"><h3 class="m-t-none m-b">OTP Verification</h3>
+                        <p></p>
+                        <form role="form" onsubmit="return false">
+                            <div class="form-group"><label>Enter code</label>
+                                <input type="text" placeholder="Enter code" id="otpToken" class="form-control"
+                                       required></div>
+                            <div>
+                                <button class="btn btn-sm btn-warning m-t-n-xs" type="submit" onclick="hideModal()">
+                                    <strong>Close</strong>
+                                </button>
+                                <button class="btn btn-sm btn-success float-right m-t-n-xs" type="submit"
+                                        onclick="verifyToken()">
+                                    <strong>Verify </strong>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="overlay">
+    <div id="text">
+        <img id="gif" src="images/lock.gif" height="120" width="120">
+        <div id="msg" style="display: none;">
+            <h4>Error encountered, please try again</h4>
+        </div>
+    </div>
+</div>
+
+<!-- Mainly scripts -->
+<script src="template/js/jquery-3.1.1.min.js"></script>
+<script src="template/js/popper.min.js"></script>
+<script src="template/js/bootstrap.js"></script>
+<!-- include the script -->
+<script src="alertifyjs/alertify.min.js"></script>
+<script type="text/javascript" src="app.js"></script>
+<script type="text/javascript" src="otp.js"></script>
+<script type="text/javascript">
+    onOtpPageLoaded(function (c) {
+        $('#myIdentifiers').html(c);
+        getLandingPageContent();
+    })
+</script>
+</body>
+</html>
